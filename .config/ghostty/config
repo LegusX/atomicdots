@@ -1,0 +1,5 @@
+theme = noctalia
+app-notifications = no-clipboard-copy,no-config-reload
+background-blur = true
+background-opacity = 0.80
+window-decoration = false
