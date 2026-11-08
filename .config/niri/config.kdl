@@ -1,0 +1,57 @@
+// include DankMaterialShell stuff
+include "dms.kdl"
+
+// include local user overrides
+include optional=true "local.kdl"
+
+prefer-no-csd
+
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+}
+
+spawn-at-startup "awww-daemon"
+spawn-at-startup "dankcal"
+
+input {
+    keyboard {
+        xkb {
+            options "caps:super"
+        }
+    }
+    focus-follows-mouse
+    warp-mouse-to-focus
+}
+
+binds {
+    Mod+Q { spawn "ghostty"; }
+    Mod+C { close-window; }
+    Mod+M { quit; }
+    Mod+E { spawn "nautilus" "-w"; }
+    Mod+V { toggle-window-floating; }
+    Mod+F { fullscreen-window; }
+    Mod+W { switch-preset-column-width; }
+
+    Mod+WheelScrollDown cooldown-ms=500 { focus-workspace-down; }
+    Mod+WheelScrollUp cooldown-ms=500 { focus-workspace-up; }
+
+    Mod+MouseBack { focus-column-right; }
+    Mod+MouseForward { focus-column-left; }
+}
+
+layout {
+    preset-column-widths {
+        proportion 0.3333
+        proportion 0.5
+        proportion 0.6666
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    clip-to-geometry true
+}
+
+include "noctalia.kdl"
