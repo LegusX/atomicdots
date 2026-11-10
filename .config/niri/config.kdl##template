@@ -1,0 +1,82 @@
+include "noctalia.kdl"
+
+prefer-no-csd
+
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+}
+
+spawn-at-startup "awww-daemon"
+spawn-at-startup "dankcal"
+
+input {
+    keyboard {
+        xkb {
+            options "caps:super"
+        }
+    }
+    focus-follows-mouse
+    warp-mouse-to-focus
+}
+
+binds {
+    Mod+Q { spawn "ghostty"; }
+    Mod+C { close-window; }
+    Mod+M { quit; }
+    Mod+E { spawn "nautilus" "-w"; }
+    Mod+V { toggle-window-floating; }
+    Mod+F { fullscreen-window; }
+    Mod+W { switch-preset-column-width; }
+
+    Mod+WheelScrollDown cooldown-ms=500 { focus-workspace-down; }
+    Mod+WheelScrollUp cooldown-ms=500 { focus-workspace-up; }
+
+    Mod+MouseBack { focus-column-right; }
+    Mod+MouseForward { focus-column-left; }
+}
+
+layout {
+    preset-column-widths {
+        proportion 0.3333
+        proportion 0.5
+        proportion 0.6666
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    clip-to-geometry true
+    geometry-corner-radius 12
+    draw-border-with-background false
+    background-effect {
+        blur true
+        noise 0.05
+        saturation 3
+    }
+}
+
+window-rule {
+    match is-active=true app-id=r#"^com\.mitchellh\.ghostty$"#
+    opacity 0.85
+}
+
+{% if yadm.hostname == "ryzenshine" %}
+// Outputs specific to your desktop
+output "LG Electronics LG IPS QHD 209NTXR1Y034" {
+    scale 1.0
+    position x=0 y=0
+    variable-refresh-rate
+    focus-at-startup
+}
+output "Hewlett Packard HP 22cwa 6CM0340914" {
+    position x=2560 y=800
+}
+{% endif %}
+{% if yadm.hostname == "laptop" %}
+// Outputs specific to your laptop
+output "eDP-1" {
+    scale 1.25
+}
+{% endif %}
